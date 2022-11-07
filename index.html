@@ -142,7 +142,7 @@
       			// captcha: "required",
       			email: {
       				required: true,
-      				email: true
+      				regex: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
       			},
       			phone: {
       				required: true,
@@ -156,37 +156,12 @@
       			acepto: "Debe aceptar los términos y condiciones",
       		},
       		submitHandler: function(form) {
-      			// some other code
-      			// maybe disabling submit button
-      			// then:
-      			// console.log($(form).serialize());
       			console.log('enviando')
       			if (sending==false) {
       				btn_send.classList.add('sending');
       				btn_send.setAttribute('disabled', true);
       				sending = true;
-      				$.post('verify.php', {code: $('#captcha_in').val()}, function(response, textStatus, xhr) {
-      					console.log('enviando');
-      					if (response=="success") {
-      						// document.getElementById('frm_enviar').submit();
-      						formData = $(form).serialize();
-      						// SEND DB LEADS
-      						$.post('sendmail.php', formData, function(response, textStatus, xhr) {
-      							console.log(response);
-      						});
-      						//- return false;
-      						$.post(app.myaction, formData, function(response, textStatus, xhr) {
-      							console.log(response);
-      							// $(form).submit();
-      							$(location).attr('href', response.typ);
-      						});
-      						return false;
-      					}
-      					alert('El texto de la imagen no es el correcto');
-      					sending = false;
-      					btn_send.classList.remove('sending');
-      					btn_send.removeAttribute('disabled');
-      				});
+      				alert('enviando form');
       			}
       			else {
       				console.log('Se esta enviando el form!');
